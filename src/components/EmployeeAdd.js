@@ -13,6 +13,16 @@ import FormLabel from '@mui/material/FormLabel';
 
 const EmployeeAdd = (props) => {
 
+    const [values, setValues] = React.useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        gender: ''
+      });
+
+    let newEmployee = React.createRef();
+
     return (
         <Box
             component="form"
@@ -25,10 +35,11 @@ const EmployeeAdd = (props) => {
             <div>
                 <TextField
                     required
-                    id="outlined-required"
+                    id="firstName"
                     label="First Name"
                     defaultValue="First Name"
                     inputProps={{ maxLength: 10 }}
+                    
                 />
                 <TextField
                     required
@@ -70,7 +81,9 @@ const EmployeeAdd = (props) => {
             </div>
 
             <Grid container justifyContent="flex-end">
-                <Button variant="outlined">Submit</Button>
+                <Button variant="outlined"
+                onClick={()=> console.log("firstName:", sampleDeets.firstName)}
+                >Submit</Button>
             </Grid>
 
         </Box>

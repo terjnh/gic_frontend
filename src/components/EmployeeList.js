@@ -5,6 +5,8 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 import api from "../api/config";
 import { getThemeProps } from "@mui/system";
@@ -50,14 +52,6 @@ const EmployeeList = (props) => {
 
     const renderEmployeeList = props.employees.map((employee) => {
         return (
-            // <div className="ag-theme-alpine" style={{ height: 800, width: 600 }}>
-            //     <AgGridReact
-            //         rowData={props.employees}>
-            //         <AgGridColumn field="firstName"></AgGridColumn>
-            //         <AgGridColumn field="lastName"></AgGridColumn>
-            //         <AgGridColumn field="email"></AgGridColumn>
-            //     </AgGridReact>
-            // </div>
             <div>
                 <p>{employee.firstName} {employee.lastName}</p>
                 <p>Email: {employee.email}</p>
@@ -69,7 +63,7 @@ const EmployeeList = (props) => {
     const renderEmployeeListAggrid = () => {
         return (
             <div className="ag-theme-alpine" style={{ height: 700, width: 600 }}>
-                <AgGridReact rowData={props.employees}>
+                <AgGridReact rowData={employees}>
                     <AgGridColumn field="firstName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="lastName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="email" sortable={true}></AgGridColumn>
@@ -83,20 +77,19 @@ const EmployeeList = (props) => {
     return (
         <Container maxWidth="sm">
             <div>
-                <p>~Table to contain employee list~</p>
-                <div>
+                <h3>List of Employees</h3>
+                <Grid container justifyContent="flex-end">
                     <Link to={{
                         pathname: `/employee/add`
                     }}>
-                        <button>Add</button>
+                        <Button variant="outlined">Add</Button>
                     </Link>
-                </div>
-                <div>{renderEmployeeListAggrid()}</div>
+                </Grid>
 
-                <br></br><br></br>
-                <button onClick={() => {
-                    console.log("props.employees:", props.employees)
-                }}>test button</button>
+                <Grid container justifyContent="flex-end">
+                <div>{renderEmployeeListAggrid()}</div>
+                </Grid>
+
             </div>
         </Container>
     );
