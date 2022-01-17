@@ -19,9 +19,29 @@ const EmployeeAdd = (props) => {
         email: '',
         phoneNumber: '',
         gender: ''
-      });
+    });
 
-    let newEmployee = React.createRef();
+    // textfields change handling
+    const _handleFirstNameChange = (e) => {
+        setValues({
+            ...values,
+            firstName: e.target.value });
+    }
+    const _handleLastNameChange = (e) => {
+        setValues({
+            ...values,
+            lastName: e.target.value });
+    }
+    const _handleEmailChange = (e) => {
+        setValues({
+            ...values,
+            email: e.target.value });
+    }
+    const _handlePhoneNumChange = (e) => {
+        setValues({
+            ...values,
+            phoneNumber: e.target.value });
+    }
 
     return (
         <Box
@@ -38,31 +58,34 @@ const EmployeeAdd = (props) => {
                     id="firstName"
                     label="First Name"
                     defaultValue="First Name"
+                    onChange={_handleFirstNameChange}
                     inputProps={{ maxLength: 10 }}
-                    
                 />
                 <TextField
                     required
-                    id="outlined-required"
+                    id="lastName"
                     label="Last Name"
                     defaultValue="Last Name"
+                    onChange={_handleLastNameChange}
                     inputProps={{ maxLength: 10 }}
                 />
             </div>
             <div>
                 <TextField
                     required
-                    id="outlined-required"
+                    id="email"
                     label="Email Address"
                     defaultValue="Email"
+                    onChange={_handleEmailChange}
                 />
             </div>
             <div>
                 <TextField
                     required
-                    id="outlined-required"
+                    id="phoneNumber"
                     label="Phone Number"
                     defaultValue="Phone number"
+                    onChange={_handlePhoneNumChange}
                 />
             </div>
 
@@ -82,7 +105,7 @@ const EmployeeAdd = (props) => {
 
             <Grid container justifyContent="flex-end">
                 <Button variant="outlined"
-                onClick={()=> console.log("firstName:", sampleDeets.firstName)}
+                    onClick={() => console.log("values:", values)}
                 >Submit</Button>
             </Grid>
 
