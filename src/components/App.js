@@ -35,6 +35,14 @@ function App() {
     return resData;
   }
 
+  const onAddNewEmployee = (newEmployee) => {
+    console.log("App.js:newEmployee=", newEmployee)
+    setEmployees([
+      ...employees,
+      employees.push(newEmployee)
+    ])
+    console.log("updated employees = ", employees)
+  }
 
   return (
     <div className="App">
@@ -58,6 +66,8 @@ function App() {
               exact
               render={(props) => (
                 <EmployeeAdd
+                {...props}
+                addNewEmployee={onAddNewEmployee}
                 />
               )}
             />

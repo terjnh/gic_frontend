@@ -13,7 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 const EmployeeAdd = (props) => {
 
-    const [values, setValues] = React.useState({
+    const [newEmployee, setNewEmployee] = React.useState({
         firstName: '',
         lastName: '',
         email: '',
@@ -23,24 +23,32 @@ const EmployeeAdd = (props) => {
 
     // textfields change handling
     const _handleFirstNameChange = (e) => {
-        setValues({
-            ...values,
-            firstName: e.target.value });
+        setNewEmployee({
+            ...newEmployee,
+            firstName: e.target.value
+        });
     }
     const _handleLastNameChange = (e) => {
-        setValues({
-            ...values,
-            lastName: e.target.value });
+        setNewEmployee({
+            ...newEmployee,
+            lastName: e.target.value
+        });
     }
     const _handleEmailChange = (e) => {
-        setValues({
-            ...values,
-            email: e.target.value });
+        setNewEmployee({
+            ...newEmployee,
+            email: e.target.value
+        });
     }
     const _handlePhoneNumChange = (e) => {
-        setValues({
-            ...values,
-            phoneNumber: e.target.value });
+        setNewEmployee({
+            ...newEmployee,
+            phoneNumber: e.target.value
+        });
+    }
+
+    const addNewEmployee = (newEmployee) => {
+        props.addNewEmployee(newEmployee);
     }
 
     return (
@@ -52,50 +60,53 @@ const EmployeeAdd = (props) => {
             noValidate
             autoComplete="off">
             <div><h2>Adding an employee</h2></div>
-            <div>
-                <TextField
-                    required
-                    id="firstName"
-                    label="First Name"
-                    defaultValue="First Name"
-                    onChange={_handleFirstNameChange}
-                    inputProps={{ maxLength: 10 }}
-                />
-                <TextField
-                    required
-                    id="lastName"
-                    label="Last Name"
-                    defaultValue="Last Name"
-                    onChange={_handleLastNameChange}
-                    inputProps={{ maxLength: 10 }}
-                />
-            </div>
-            <div>
-                <TextField
-                    required
-                    id="email"
-                    label="Email Address"
-                    defaultValue="Email"
-                    onChange={_handleEmailChange}
-                />
-            </div>
-            <div>
-                <TextField
-                    required
-                    id="phoneNumber"
-                    label="Phone Number"
-                    defaultValue="Phone number"
-                    onChange={_handlePhoneNumChange}
-                />
-            </div>
+            <Grid container justifyContent="flex-start">
+                <div>
+                    <TextField
+                        required
+                        id="firstName"
+                        label="First Name"
+                        defaultValue="First Name"
+                        onChange={_handleFirstNameChange}
+                        inputProps={{ maxLength: 10 }}
+                    /></div></Grid>
+            <Grid container justifyContent="flex-start">
+                <div>
+                    <TextField
+                        required
+                        id="lastName"
+                        label="Last Name"
+                        defaultValue="Last Name"
+                        onChange={_handleLastNameChange}
+                        inputProps={{ maxLength: 10 }}
+                    /></div></Grid>
+            <Grid container justifyContent="flex-start">
+                <div>
+                    <TextField
+                        required
+                        id="email"
+                        label="Email Address"
+                        defaultValue="Email"
+                        onChange={_handleEmailChange}
+                    /></div></Grid>
+            <Grid container justifyContent="flex-start">
+                <div>
+                    <TextField
+                        required
+                        id="phoneNumber"
+                        label="Phone Number"
+                        defaultValue="Phone number"
+                        onChange={_handlePhoneNumChange}
+                    /></div></Grid>
+
 
             <div>
                 <br></br><br></br>
                 <FormLabel component="legend">Gender</FormLabel>
-                <RadioGroup
+                <RadioGroup row
                     aria-label="gender"
                     defaultValue="female"
-                    name="radio-buttons-group"
+                    name="row-radio-buttons-group"
                 >
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -105,7 +116,10 @@ const EmployeeAdd = (props) => {
 
             <Grid container justifyContent="flex-end">
                 <Button variant="outlined"
-                    onClick={() => console.log("values:", values)}
+                    onClick={() => {
+                        // console.log("newEmployee:", newEmployee);
+                        addNewEmployee(newEmployee);
+                    }}
                 >Submit</Button>
             </Grid>
 
