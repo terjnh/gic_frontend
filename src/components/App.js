@@ -4,13 +4,14 @@ import Container from '@mui/material/Container';
 
 import api from "../api/config";
 import EmployeeList from './EmployeeList';
+import EmployeeAdd from "./EmployeeAdd";
 import '../App.css';
 
 function App() {
   console.log("App.js init...")
 
   const [employees, setEmployees] = useState([]);
-  
+
   // Upon page refresh, we will retrieve all employees from the mock API
   useEffect(() => {
     const getAllEmployees = async () => {
@@ -19,7 +20,7 @@ function App() {
         setEmployees(allEmployees);
       }
     };
-    getAllEmployees(); 
+    getAllEmployees();
   }, []);
 
   const retrieveEmployeesAPI = async () => {
@@ -43,12 +44,20 @@ function App() {
 
           <Switch>
             <Route
-              path="/employees"
+              path="/employee/list"
               exact
               render={(props) => (
                 <EmployeeList
                   {...props}
                   employees={employees}
+                />
+              )}
+            />
+            <Route
+              path="/employee/add"
+              exact
+              render={(props) => (
+                <EmployeeAdd
                 />
               )}
             />

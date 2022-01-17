@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    value: [],
+    value: 0,
     status: 'init'
 }
 
@@ -12,14 +12,13 @@ export const employeeSlice = createSlice ({
     initialState,
     reducers: {
         testAdd: (state) => {
-            state.value = {
-                "name": "sampleName",
-                "age": "sampleAge"
-            }
+            state.value += 1;
         }
     }
 });
 
 export const { testAdd } = employeeSlice.actions;
+
+export const selectEmployees = (state) => state.employeeList.value;
 
 export default employeeSlice.reducer;
