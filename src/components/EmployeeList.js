@@ -33,8 +33,6 @@ const EmployeeList = (props) => {
     useEffect(() => {
         const updateEmployeesList = async () => {
             const response = await retrieveEmployeesAPI();
-            console.log("response:", response);
-            console.log("localStorage:", localStorage.getItem('employeeData'))
             // if (response && localStorage.getItem('employeeData')===null) {
             //     // setEmployees(employees);
             // }

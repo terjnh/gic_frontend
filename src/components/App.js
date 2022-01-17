@@ -19,6 +19,9 @@ function App() {
       if (allEmployees) {
         setEmployees(allEmployees);
       }
+      if (localStorage.getItem('employeeData') !== null) {
+        setEmployees(JSON.parse(localStorage.getItem('employeeData')));
+      }
     };
     getAllEmployees();
   }, []);
@@ -32,16 +35,27 @@ function App() {
       resData = response.data;
       console.log("retrieveEmployeesAPI-response:", resData)
     }
+    if (JSON.parse(localStorage.getItem('employeeData')) === null) {
+      localStorage.setItem('employeeData', JSON.stringify(resData))
+    }
     return resData;
   }
 
   const onAddNewEmployee = (newEmployee) => {
-    let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
-    setEmployees([
-      ...localEmployeeData,
-      localEmployeeData.push(newEmployee)
-    ])
-    localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
+    if (JSON.parse(localStorage.getItem('employeeData') === null)) {
+      setEmployees([
+        ...employees,
+        employees.push(newEmployee)
+      ]);
+    }
+    else {
+      let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
+      setEmployees([
+        ...localEmployeeData,
+        localEmployeeData.push(newEmployee)
+      ])
+      localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
+    }
   }
 
   return (
@@ -66,8 +80,8 @@ function App() {
               exact
               render={(props) => (
                 <EmployeeAdd
-                {...props}
-                addNewEmployee={onAddNewEmployee}
+                  {...props}
+                  addNewEmployee={onAddNewEmployee}
                 />
               )}
             />
