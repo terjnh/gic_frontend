@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -12,13 +12,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
 const EmployeeAdd = (props) => {
+    let history = useHistory();
 
     const [newEmployee, setNewEmployee] = React.useState({
         firstName: '',
         lastName: '',
         email: '',
         phoneNumber: '',
-        gender: ''
+        gender: 'female'
     });
 
     // textfields change handling
@@ -46,9 +47,20 @@ const EmployeeAdd = (props) => {
             phoneNumber: e.target.value
         });
     }
+    const _handleGenderChange = (e) => {
+        setNewEmployee({
+            ...newEmployee,
+            gender: e.target.value
+        })
+    }
 
     const addNewEmployee = (newEmployee) => {
         props.addNewEmployee(newEmployee);
+    }
+
+    const routeToMain = () => {
+        let pathList = `/employee/list`
+        history.push(pathList);
     }
 
     return (
@@ -59,7 +71,7 @@ const EmployeeAdd = (props) => {
             }}
             noValidate
             autoComplete="off">
-            <div><h2>Adding an employee</h2></div>
+            <div><h3>Adding an employee</h3></div>
             <Grid container justifyContent="flex-start">
                 <div>
                     <TextField
@@ -107,6 +119,7 @@ const EmployeeAdd = (props) => {
                     aria-label="gender"
                     defaultValue="female"
                     name="row-radio-buttons-group"
+                    onChange={_handleGenderChange}
                 >
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
@@ -119,6 +132,7 @@ const EmployeeAdd = (props) => {
                     onClick={() => {
                         // console.log("newEmployee:", newEmployee);
                         addNewEmployee(newEmployee);
+                        routeToMain();
                     }}
                 >Submit</Button>
             </Grid>

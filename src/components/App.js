@@ -36,19 +36,19 @@ function App() {
   }
 
   const onAddNewEmployee = (newEmployee) => {
-    console.log("App.js:newEmployee=", newEmployee)
+    let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
     setEmployees([
-      ...employees,
-      employees.push(newEmployee)
+      ...localEmployeeData,
+      localEmployeeData.push(newEmployee)
     ])
-    console.log("updated employees = ", employees)
+    localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
   }
 
   return (
     <div className="App">
       <Router>
         <Container maxWidth="sm">
-          <h1>Test Headerr</h1>
+          <h1 className="App-header2">Persistent Header</h1>
 
           <Switch>
             <Route

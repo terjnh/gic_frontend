@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -17,11 +17,13 @@ import { getThemeProps } from "@mui/system";
 
 
 const EmployeeList = (props) => {
+
     const employeesList = props.employees
-    console.log("EmployeeList props.employees:", employeesList)
 
     const [employees, setEmployees] = useState(employeesList)
     const [testUser, setTestUser] = useState();
+
+    console.log("EmployeeList employees:", employees)
 
     // REDUX
     // const employeesState = useSelector(selectEmployees);
@@ -31,8 +33,14 @@ const EmployeeList = (props) => {
     useEffect(() => {
         const updateEmployeesList = async () => {
             const response = await retrieveEmployeesAPI();
-            if (response) {
-                setEmployees(response);
+            console.log("response:", response);
+            console.log("localStorage:", localStorage.getItem('employeeData'))
+            // if (response && localStorage.getItem('employeeData')===null) {
+            //     // setEmployees(employees);
+            // }
+            if (localStorage.getItem('employeeData') !== null) {
+                console.log("employeeData(localStorage):", JSON.parse(localStorage.getItem('employeeData')));
+                setEmployees(JSON.parse(localStorage.getItem('employeeData')));
             }
         };
         updateEmployeesList();
@@ -46,30 +54,37 @@ const EmployeeList = (props) => {
         } else {
             resData = response.data;
             console.log("retrieveEmployeesAPI-response:", resData)
+            if (localStorage.getItem('employeeData') === null) {
+                setEmployees(resData);
+            }
         }
+        // localStorage.setItem('employeeData', resData);
         return resData;
     }
 
-    const renderEmployeeList = props.employees.map((employee) => {
-        return (
-            <div>
-                <p>{employee.firstName} {employee.lastName}</p>
-                <p>Email: {employee.email}</p>
-                <br></br>
-            </div>
-        );
-    });
+    // TESTING PURPOSES
+    // const renderEmployeeList = props.employees.map((employee) => {
+    //     return (
+    //         <div>
+    //             <p>{employee.firstName} {employee.lastName}</p>
+    //             <p>Email: {employee.email}</p>
+    //             <br></br>
+    //         </div>
+    //     );
+    // });
+
 
     const renderEmployeeListAggrid = () => {
         return (
-            <div className="ag-theme-alpine" style={{ height: 700, width: 600 }}>
+            <div className="ag-theme-alpine" style={{ height: 700, width: 1000 }}>
                 <AgGridReact rowData={employees}>
                     <AgGridColumn field="firstName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="lastName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="email" sortable={true}></AgGridColumn>
+                    <AgGridColumn field="phoneNumber" sortable={true}></AgGridColumn>
+                    <AgGridColumn field="gender" sortable={true}></AgGridColumn>
                 </AgGridReact>
             </div>
-
         );
     };
 
@@ -78,16 +93,18 @@ const EmployeeList = (props) => {
         <Container maxWidth="sm">
             <div>
                 <h3>List of Employees</h3>
-                <Grid container justifyContent="flex-end">
-                    <Link to={{
-                        pathname: `/employee/add`
-                    }}>
-                        <Button variant="outlined">Add</Button>
-                    </Link>
-                </Grid>
+                <Grid>
+                    <Grid container justifyContent="flex-end">
+                        <Link to={{
+                            pathname: `/employee/add`
+                        }}>
+                            <Button variant="outlined">Add new employee</Button>
+                        </Link>
+                    </Grid>
 
-                <Grid container justifyContent="flex-end">
-                <div>{renderEmployeeListAggrid()}</div>
+                    <Grid container justifyContent="center">
+                        <div>{renderEmployeeListAggrid()}</div>
+                    </Grid>
                 </Grid>
 
             </div>
