@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import * as agGrid from "ag-grid-community";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import Container from '@mui/material/Container';
@@ -10,6 +11,7 @@ import Button from '@mui/material/Button';
 
 import api from "../api/config";
 import { getThemeProps } from "@mui/system";
+import BtnCellRenderer from "./BtnCellEmployeeList";
 // import {
 //     testAdd,
 //     selectEmployees
@@ -23,11 +25,9 @@ const EmployeeList = (props) => {
     const [employees, setEmployees] = useState(employeesList)
     const [testUser, setTestUser] = useState();
 
-    console.log("EmployeeList employees:", employees)
 
-    // REDUX
-    // const employeesState = useSelector(selectEmployees);
-    // const dispatch = useDispatch();
+
+
 
 
     useEffect(() => {
@@ -37,7 +37,6 @@ const EmployeeList = (props) => {
             //     // setEmployees(employees);
             // }
             if (localStorage.getItem('employeeData') !== null) {
-                console.log("employeeData(localStorage):", JSON.parse(localStorage.getItem('employeeData')));
                 setEmployees(JSON.parse(localStorage.getItem('employeeData')));
             }
         };
@@ -56,7 +55,6 @@ const EmployeeList = (props) => {
                 setEmployees(resData);
             }
         }
-        // localStorage.setItem('employeeData', resData);
         return resData;
     }
 
@@ -87,6 +85,65 @@ const EmployeeList = (props) => {
     };
 
 
+
+
+
+    const RenderEmployeeListAggrid2 = () => {
+        const [gridApi, setGridApi] = useState(null);
+        const [gridColumnApi, setGridColumnApi] = useState(null);
+        const [rowData, setRowData] = useState(null);
+
+        // setRowData(employees);
+
+        const onGridReady = (params) => {
+            console.log("params:", params)
+            setGridApi(params.api);
+            setGridColumnApi(params.columnApi);
+
+            const updateData = (employees) => {
+                setRowData(employees);
+                console.log("data:", employees)
+            };
+        };
+        return (
+            <div style={{ width: 1000, height: 700 }}>
+                <div
+                    id="myGrid"
+                    style={{ height: 700, width: 1000, }}
+                    className="ag-theme-alpine">
+                    <AgGridReact
+                        frameworkComponents={{
+                            btnCellRenderer: BtnCellRenderer,
+                        }}
+                        defaultColDef={{
+                            editable: true,
+                            sortable: true,
+                            flex: 1,
+                            minWidth: 100,
+                            filter: true,
+                            resizable: true,
+                        }}
+                        // onGridReady={onGridReady}
+                        rowData={employees}
+                    >
+                        <AgGridColumn field="firstName" />
+                        <AgGridColumn field="lastName" />
+                        <AgGridColumn field="email" />
+                        <AgGridColumn field="phoneNumber" />
+                        <AgGridColumn field="gender" />
+                        <AgGridColumn
+                            field="actions"
+                            minWidth={175}
+                            cellRenderer="btnCellRenderer"
+                        />
+                    </AgGridReact>
+                </div>
+            </div>
+        );
+    };
+
+
+
     return (
         <Container maxWidth="sm">
             <div>
@@ -101,7 +158,7 @@ const EmployeeList = (props) => {
                     </Grid>
 
                     <Grid container justifyContent="center">
-                        <div>{renderEmployeeListAggrid()}</div>
+                        <div>{RenderEmployeeListAggrid2()}</div>
                     </Grid>
                 </Grid>
 

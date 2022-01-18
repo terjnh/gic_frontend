@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Switch, Route, useHistory, Link, BrowserRouter } from "react-router-dom";
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 import api from "../api/config";
 import EmployeeList from './EmployeeList';
@@ -63,6 +65,14 @@ function App() {
       <Router>
         <Container maxWidth="sm">
           <h1 className="App-header2">Persistent Header</h1>
+
+          <Grid container justifyContent="center">
+            <Link to={{
+              pathname: `/employee/list`
+            }}>
+              <Button variant="contained">View list of employees</Button>
+            </Link>
+          </Grid>
 
           <Switch>
             <Route
