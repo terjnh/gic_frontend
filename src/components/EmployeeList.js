@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 
 import api from "../api/config";
 import { getThemeProps } from "@mui/system";
-import BtnCellRenderer from "./BtnCellEmployeeList";
+import EditBtn from "./EditBtnEmployeeList";
 // import {
 //     testAdd,
 //     selectEmployees
@@ -24,9 +24,6 @@ const EmployeeList = (props) => {
 
     const [employees, setEmployees] = useState(employeesList)
     const [testUser, setTestUser] = useState();
-
-
-
 
 
 
@@ -113,7 +110,7 @@ const EmployeeList = (props) => {
                     className="ag-theme-alpine">
                     <AgGridReact
                         frameworkComponents={{
-                            btnCellRenderer: BtnCellRenderer,
+                            editBtn: EditBtn,
                         }}
                         defaultColDef={{
                             editable: true,
@@ -133,8 +130,8 @@ const EmployeeList = (props) => {
                         <AgGridColumn field="gender" />
                         <AgGridColumn
                             field="actions"
-                            minWidth={175}
-                            cellRenderer="btnCellRenderer"
+                            minWidth={200}
+                            cellRenderer="editBtn"
                         />
                     </AgGridReact>
                 </div>
