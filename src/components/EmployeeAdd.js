@@ -54,6 +54,7 @@ const EmployeeAdd = (props) => {
     }
 
     const addNewEmployee = (newEmployee) => {
+        // console.log("newEmployee:", newEmployee)
         props.addNewEmployee(newEmployee);
     }
 
@@ -132,7 +133,7 @@ const EmployeeAdd = (props) => {
             <Grid container justifyContent="flex-end">
                 <Button variant="outlined"
                     onClick={() => {
-                        // console.log("newEmployee:", newEmployee);
+                        console.log("newEmployee:", newEmployee);
                         addNewEmployee(newEmployee);
                         routeToMain();
                         window.location.reload(false);

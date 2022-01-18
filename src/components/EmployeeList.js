@@ -22,27 +22,27 @@ const EmployeeList = (props) => {
     const [testUser, setTestUser] = useState();
 
     const [rowSelected, setRowSelected] = useState();
-    
+
     useEffect(() => {
-        if(props.location.state!==undefined) {
+        if (props.location.state !== undefined) {
             setRowSelected(props.location.state.rowSelected);
-            console.log("row selected......", rowSelected)
+            console.log("row selected....", rowSelected)
         }
     }, [rowSelected])
 
     useEffect(() => {
         const updateEmployeesList = async () => {
             const response = await retrieveEmployeesAPI();
-            // if (response && localStorage.getItem('employeeData')===null) {
-            //     // setEmployees(employees);
-            // }
+            if (response && localStorage.getItem('employeeData')===null) {
+                // setEmployees(employees);
+            }
             if (localStorage.getItem('employeeData') !== null) {
                 setEmployees(JSON.parse(localStorage.getItem('employeeData')));
             }
         };
         updateEmployeesList();
 
-        
+
     }, [employees])
 
     const retrieveEmployeesAPI = async () => {
@@ -136,28 +136,21 @@ const EmployeeList = (props) => {
 
 
     return (
-        <Container maxWidth="sm">
+        // <Container maxWidth="sm">
             <div>
                 <h3>List of Employees</h3>
-                <Grid container spacing={0}>
-                    <Grid container
-                        direction="column-reverse"
-                        justifyContent="flex-end"
-                        alignItems="flex-end">
-                        <Link to={{
-                            pathname: `/employee/add`
-                        }}>
-                            <button className="Add-emp-button">Add new employee</button>
-                        </Link>
-                </Grid>
-                        
+                <Link to={{
+                    pathname: `/employee/add`
+                }}>
+                    <button className="Add-emp-button">Add new employee</button>
+                </Link>
+
                 <Grid container justifyContent="center">
                     <div>{RenderEmployeeListAggrid()}</div>
                 </Grid>
-            </Grid>
 
-        </div>
-        </Container >
+            </div>
+        // </Container >
     );
 };
 

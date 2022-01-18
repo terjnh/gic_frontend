@@ -15,41 +15,48 @@ function App() {
   const [employees, setEmployees] = useState([]);
 
   // Upon page refresh, we will retrieve all employees from the mock API
-  // useEffect(() => {
-  //   const getAllEmployees = async () => {
-  //     const allEmployees = await retrieveEmployeesAPI();
-  //     if (allEmployees) {
-  //       setEmployees(allEmployees);
-  //     }
-  //     if (localStorage.getItem('employeeData') !== null) {
-  //       setEmployees(JSON.parse(localStorage.getItem('employeeData')));
-  //     }
-  //   };
-  //   getAllEmployees();
-  // }, []);
+  useEffect(() => {
+    const getAllEmployees = async () => {
+      const allEmployees = await retrieveEmployeesAPI();
+      if (allEmployees) {
+        setEmployees(allEmployees);
+      }
+      if (localStorage.getItem('employeeData') !== null) {
+        setEmployees(JSON.parse(localStorage.getItem('employeeData')));
+      }
+    };
+    getAllEmployees();
+  }, []);
 
-  // const retrieveEmployeesAPI = async () => {
-  //   const response = await api.get("/employees");
-  //   let resData;
-  //   if (response.status !== 200) {
-  //     console.log("Error in retrieving employees API data")
-  //   } else {
-  //     resData = response.data;
-  //     // console.log("retrieveEmployeesAPI-response:", resData)
-  //   }
-  //   if (JSON.parse(localStorage.getItem('employeeData')) === null) {
-  //     localStorage.setItem('employeeData', JSON.stringify(resData))
-  //   }
-  //   return resData;
-  // }
+  const retrieveEmployeesAPI = async () => {
+    const response = await api.get("/employees");
+    let resData;
+    if (response.status !== 200) {
+      console.log("Error in retrieving employees API data")
+    } else {
+      resData = response.data;
+      // console.log("retrieveEmployeesAPI-response:", resData)
+    }
+    if (JSON.parse(localStorage.getItem('employeeData')) === null) {
+      localStorage.setItem('employeeData', JSON.stringify(resData))
+    }
+    return resData;
+  }
 
   // 'employees' state for display is handled in EmployeeList.js
   const onAddNewEmployee = (newEmployee) => {
-      let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
+    console.log("onAddNewEmployee--", newEmployee)
+    let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
+    
+    // Update local storage
+    if(localEmployeeData===null) {
+      localStorage.setItem('employeeData', JSON.stringify(employees));
+    }
+    else {
       localEmployeeData.push(newEmployee);
-
-      // Update local storage
       localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
+    }
+    console.log("localEmployeeData--", localEmployeeData)
   }
 
 
