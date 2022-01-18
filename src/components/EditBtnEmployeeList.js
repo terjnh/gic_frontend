@@ -43,13 +43,17 @@ export default (props) => {
   };
 
   const deleteButtonClicked = () => {
-    // alert(`Delete clicked!`);
     console.log("DelBtn, rowIndex:", props.rowIndex)
-    let listPath = `/employee/list`;
-    history.push({
-      pathname: listPath,
-      state: { rowSelected: props.rowIndex }
-    })
+    // let listPath = `/employee/list`;
+    // history.push({
+    //   pathname: listPath,
+    //   state: { rowSelected: props.rowIndex }
+    // })
+
+    // Delete index from localStorage array
+    let employeeData = JSON.parse(localStorage.getItem('employeeData'));
+    employeeData.splice(props.rowIndex, 1);
+    localStorage.setItem('employeeData', JSON.stringify(employeeData));
   };
 
   return (
@@ -68,7 +72,6 @@ export default (props) => {
         variant="outlined"
         size="small"
         onClick={() => {
-          deleteButtonClicked()
           handleOpen();
         }}
       >Delete
@@ -95,6 +98,7 @@ export default (props) => {
             <Button variant="contained"
             onClick={() => {
               handleClose();
+              deleteButtonClicked();
               window.location.reload(false);
             }}>
               Confirm Delete

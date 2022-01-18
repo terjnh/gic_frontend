@@ -45,7 +45,6 @@ function App() {
 
   // 'employees' state for display is handled in EmployeeList.js
   const onAddNewEmployee = (newEmployee) => {
-    console.log("onAddNewEmployee--", newEmployee)
     let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
     
     // Update local storage
@@ -56,28 +55,15 @@ function App() {
       localEmployeeData.push(newEmployee);
       localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
     }
-    console.log("localEmployeeData--", localEmployeeData)
   }
 
 
-
-
-  // FOR EDIT
-  // setEmployees(employees => {
-  //   employees.map((item, j) => {
-  //     console.log("item: ", item, "|| j:", j)
-  //   });
-  // })
   const onEditEmployee = (rowSelected, employee) => {
     // Update employees state & overwrite array index in localStorage
     let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
 
-    console.log("Edit this (prev):", localEmployeeData[rowSelected])
-    console.log("Replace with (new):", employee)
-
     localEmployeeData[rowSelected] = employee;
     localStorage.setItem('employeeData', JSON.stringify(localEmployeeData));
-    console.log("localEmployeeData(updated):", localEmployeeData)
   }
 
 

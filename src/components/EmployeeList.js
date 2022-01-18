@@ -23,26 +23,32 @@ const EmployeeList = (props) => {
 
     const [rowSelected, setRowSelected] = useState();
 
-    useEffect(() => {
-        if (props.location.state !== undefined) {
-            setRowSelected(props.location.state.rowSelected);
-            console.log("row selected....", rowSelected)
-        }
-    }, [rowSelected])
+
+    // useEffect(() => {
+    //     if (props.location.state !== undefined) {
+    //         setRowSelected(props.location.state.rowSelected);
+    //         console.log("row selected....", rowSelected)
+
+    //         // if(rowSelected!==undefined) {
+    //         //     let employeeData = JSON.parse(localStorage.getItem('employeeData'));
+    //         //     employeeData.splice(rowSelected, 1);
+    //         //     localStorage.setItem('employeeData', JSON.stringify(employeeData));
+    //         // }
+    //     }
+    // }, [rowSelected])
 
     useEffect(() => {
         const updateEmployeesList = async () => {
             const response = await retrieveEmployeesAPI();
-            if (response && localStorage.getItem('employeeData')===null) {
+            if (response && localStorage.getItem('employeeData') === null) {
                 // setEmployees(employees);
             }
             if (localStorage.getItem('employeeData') !== null) {
-                setEmployees(JSON.parse(localStorage.getItem('employeeData')));
+                let employeeData = JSON.parse(localStorage.getItem('employeeData'));
+                setEmployees(employeeData);
             }
         };
         updateEmployeesList();
-
-
     }, [employees])
 
     const retrieveEmployeesAPI = async () => {
@@ -137,19 +143,19 @@ const EmployeeList = (props) => {
 
     return (
         // <Container maxWidth="sm">
-            <div>
-                <h3>List of Employees</h3>
-                <Link to={{
-                    pathname: `/employee/add`
-                }}>
-                    <button className="Add-emp-button">Add new employee</button>
-                </Link>
+        <div>
+            <h3>List of Employees</h3>
+            <Link to={{
+                pathname: `/employee/add`
+            }}>
+                <button className="Add-emp-button">Add new employee</button>
+            </Link>
 
-                <Grid container justifyContent="center">
-                    <div>{RenderEmployeeListAggrid()}</div>
-                </Grid>
+            <Grid container justifyContent="center">
+                <div>{RenderEmployeeListAggrid()}</div>
+            </Grid>
 
-            </div>
+        </div>
         // </Container >
     );
 };
