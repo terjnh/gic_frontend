@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -18,7 +17,7 @@ const EmployeeAdd = (props) => {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber: '',
+        number: '',
         gender: 'female'
     });
 
@@ -44,7 +43,7 @@ const EmployeeAdd = (props) => {
     const _handlePhoneNumChange = (e) => {
         setNewEmployee({
             ...newEmployee,
-            phoneNumber: e.target.value
+            number: e.target.value
         });
     }
     const _handleGenderChange = (e) => {
@@ -81,7 +80,8 @@ const EmployeeAdd = (props) => {
                         defaultValue="First Name"
                         onChange={_handleFirstNameChange}
                         inputProps={{ maxLength: 10 }}
-                    /></div></Grid>
+                    /></div>
+            </Grid>
             <Grid container justifyContent="flex-start">
                 <div>
                     <TextField
@@ -91,7 +91,8 @@ const EmployeeAdd = (props) => {
                         defaultValue="Last Name"
                         onChange={_handleLastNameChange}
                         inputProps={{ maxLength: 10 }}
-                    /></div></Grid>
+                    /></div>
+            </Grid>
             <Grid container justifyContent="flex-start">
                 <div>
                     <TextField
@@ -100,7 +101,8 @@ const EmployeeAdd = (props) => {
                         label="Email Address"
                         defaultValue="Email"
                         onChange={_handleEmailChange}
-                    /></div></Grid>
+                    /></div>
+            </Grid>
             <Grid container justifyContent="flex-start">
                 <div>
                     <TextField
@@ -109,8 +111,8 @@ const EmployeeAdd = (props) => {
                         label="Phone Number"
                         defaultValue="Phone number"
                         onChange={_handlePhoneNumChange}
-                    /></div></Grid>
-
+                    /></div>
+            </Grid>
 
             <div>
                 <br></br><br></br>
@@ -133,6 +135,7 @@ const EmployeeAdd = (props) => {
                         // console.log("newEmployee:", newEmployee);
                         addNewEmployee(newEmployee);
                         routeToMain();
+                        window.location.reload(false);
                     }}
                 >Submit</Button>
             </Grid>

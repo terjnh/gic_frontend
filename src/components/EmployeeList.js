@@ -12,10 +12,6 @@ import Button from '@mui/material/Button';
 import api from "../api/config";
 import { getThemeProps } from "@mui/system";
 import EditBtn from "./EditBtnEmployeeList";
-// import {
-//     testAdd,
-//     selectEmployees
-// } from "../state/employees/EmployeeSlice";
 
 
 const EmployeeList = (props) => {
@@ -74,13 +70,12 @@ const EmployeeList = (props) => {
                     <AgGridColumn field="firstName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="lastName" sortable={true}></AgGridColumn>
                     <AgGridColumn field="email" sortable={true}></AgGridColumn>
-                    <AgGridColumn field="phoneNumber" sortable={true}></AgGridColumn>
+                    <AgGridColumn field="number" sortable={true}></AgGridColumn>
                     <AgGridColumn field="gender" sortable={true}></AgGridColumn>
                 </AgGridReact>
             </div>
         );
     };
-
 
 
 
@@ -126,10 +121,11 @@ const EmployeeList = (props) => {
                         <AgGridColumn field="firstName" />
                         <AgGridColumn field="lastName" />
                         <AgGridColumn field="email" />
-                        <AgGridColumn field="phoneNumber" />
+                        <AgGridColumn field="number" />
                         <AgGridColumn field="gender" />
                         <AgGridColumn
                             field="actions"
+                            editable="false"
                             minWidth={200}
                             cellRenderer="editBtn"
                         />

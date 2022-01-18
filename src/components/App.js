@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Switch, Route, useHistory, Link, BrowserRouter } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Switch, Route, BrowserRouter } from "react-router-dom";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -7,11 +8,10 @@ import Button from '@mui/material/Button';
 import api from "../api/config";
 import EmployeeList from './EmployeeList';
 import EmployeeAdd from "./EmployeeAdd";
+import EmployeeEdit from "./EmployeeEdit";
 import '../App.css';
 
 function App() {
-  console.log("App.js init...")
-
   const [employees, setEmployees] = useState([]);
 
   // Upon page refresh, we will retrieve all employees from the mock API
@@ -35,7 +35,7 @@ function App() {
       console.log("Error in retrieving employees API data")
     } else {
       resData = response.data;
-      console.log("retrieveEmployeesAPI-response:", resData)
+      // console.log("retrieveEmployeesAPI-response:", resData)
     }
     if (JSON.parse(localStorage.getItem('employeeData')) === null) {
       localStorage.setItem('employeeData', JSON.stringify(resData))
@@ -43,22 +43,36 @@ function App() {
     return resData;
   }
 
+  // 'employees' state for display is handled in EmployeeList.js
   const onAddNewEmployee = (newEmployee) => {
-    if (JSON.parse(localStorage.getItem('employeeData') === null)) {
-      setEmployees([
-        ...employees,
-        employees.push(newEmployee)
-      ]);
-    }
-    else {
       let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
-      setEmployees([
-        ...localEmployeeData,
-        localEmployeeData.push(newEmployee)
-      ])
+      localEmployeeData.push(newEmployee);
+
+      // Update local storage
       localStorage.setItem('employeeData', JSON.stringify(localEmployeeData))
-    }
   }
+
+
+
+
+  // FOR EDIT
+  // setEmployees(employees => {
+  //   employees.map((item, j) => {
+  //     console.log("item: ", item, "|| j:", j)
+  //   });
+  // })
+  const onEditEmployee = (rowSelected, employee) => {
+    // Update employees state & overwrite array index in localStorage
+    let localEmployeeData = JSON.parse(localStorage.getItem('employeeData'));
+
+    console.log("Edit this (prev):", localEmployeeData[rowSelected])
+    console.log("Replace with (new):", employee)
+
+    localEmployeeData[rowSelected] = employee;
+    localStorage.setItem('employeeData', JSON.stringify(localEmployeeData));
+    console.log("localEmployeeData(updated):", localEmployeeData)
+  }
+
 
   return (
     <div className="App">
@@ -95,6 +109,18 @@ function App() {
                 />
               )}
             />
+            <Route
+              path="/employee/edit"
+              exact
+              render={(props) => (
+                <EmployeeEdit
+                  {...props}
+                  employees={employees}
+                  editEmployee={onEditEmployee}
+                />
+              )}
+            />
+
           </Switch>
 
 
