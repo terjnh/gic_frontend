@@ -21,7 +21,14 @@ const EmployeeList = (props) => {
     const [employees, setEmployees] = useState(employeesList)
     const [testUser, setTestUser] = useState();
 
-
+    const [rowSelected, setRowSelected] = useState();
+    
+    useEffect(() => {
+        if(props.location.state!==undefined) {
+            setRowSelected(props.location.state.rowSelected);
+            console.log("row selected......", rowSelected)
+        }
+    }, [rowSelected])
 
     useEffect(() => {
         const updateEmployeesList = async () => {
@@ -34,7 +41,9 @@ const EmployeeList = (props) => {
             }
         };
         updateEmployeesList();
-    }, [])
+
+        
+    }, [employees])
 
     const retrieveEmployeesAPI = async () => {
         const response = await api.get("/employees");
@@ -43,7 +52,7 @@ const EmployeeList = (props) => {
             console.log("Error in retrieving employees API data")
         } else {
             resData = response.data;
-            console.log("retrieveEmployeesAPI-response:", resData)
+            // console.log("retrieveEmployeesAPI-response:", resData)
             if (localStorage.getItem('employeeData') === null) {
                 setEmployees(resData);
             }
