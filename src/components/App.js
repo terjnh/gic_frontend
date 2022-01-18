@@ -78,15 +78,15 @@ function App() {
     <div className="App">
       <Router>
         <Container maxWidth="sm">
-          <h1 className="App-header2">Persistent Header</h1>
+          {/* <h1 className="App-header2">Persistent Header</h1> */}
 
-          <Grid container justifyContent="center">
+          {/* <Grid container justifyContent="center">
             <Link to={{
               pathname: `/employee/list`
             }}>
               <Button variant="contained">View list of employees</Button>
             </Link>
-          </Grid>
+          </Grid> */}
 
           <Switch>
             <Route

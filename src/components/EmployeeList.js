@@ -51,36 +51,25 @@ const EmployeeList = (props) => {
         return resData;
     }
 
-    // TESTING PURPOSES
-    // const renderEmployeeList = props.employees.map((employee) => {
+    // For testing purposes
+    // const renderEmployeeListAggrid = () => {
     //     return (
-    //         <div>
-    //             <p>{employee.firstName} {employee.lastName}</p>
-    //             <p>Email: {employee.email}</p>
-    //             <br></br>
+    //         <div className="ag-theme-alpine" style={{ height: 700, width: 1000 }}>
+    //             <AgGridReact rowData={employees}>
+    //                 <AgGridColumn field="firstName" sortable={true}></AgGridColumn>
+    //                 <AgGridColumn field="lastName" sortable={true}></AgGridColumn>
+    //                 <AgGridColumn field="email" sortable={true}></AgGridColumn>
+    //                 <AgGridColumn field="number" sortable={true}></AgGridColumn>
+    //                 <AgGridColumn field="gender" sortable={true}></AgGridColumn>
+    //             </AgGridReact>
     //         </div>
     //     );
-    // });
-
-
-    const renderEmployeeListAggrid = () => {
-        return (
-            <div className="ag-theme-alpine" style={{ height: 700, width: 1000 }}>
-                <AgGridReact rowData={employees}>
-                    <AgGridColumn field="firstName" sortable={true}></AgGridColumn>
-                    <AgGridColumn field="lastName" sortable={true}></AgGridColumn>
-                    <AgGridColumn field="email" sortable={true}></AgGridColumn>
-                    <AgGridColumn field="number" sortable={true}></AgGridColumn>
-                    <AgGridColumn field="gender" sortable={true}></AgGridColumn>
-                </AgGridReact>
-            </div>
-        );
-    };
+    // };
 
 
 
 
-    const RenderEmployeeListAggrid2 = () => {
+    const RenderEmployeeListAggrid = () => {
         const [gridApi, setGridApi] = useState(null);
         const [gridColumnApi, setGridColumnApi] = useState(null);
         const [rowData, setRowData] = useState(null);
@@ -101,7 +90,7 @@ const EmployeeList = (props) => {
             <div style={{ width: 1000, height: 700 }}>
                 <div
                     id="myGrid"
-                    style={{ height: 700, width: 1000, }}
+                    style={{ width: 1000, height: 700, }}
                     className="ag-theme-alpine">
                     <AgGridReact
                         frameworkComponents={{
@@ -118,15 +107,15 @@ const EmployeeList = (props) => {
                         // onGridReady={onGridReady}
                         rowData={employees}
                     >
-                        <AgGridColumn field="firstName" />
-                        <AgGridColumn field="lastName" />
+                        <AgGridColumn field="firstName" maxWidth={150} />
+                        <AgGridColumn field="lastName" maxWidth={150} />
                         <AgGridColumn field="email" />
-                        <AgGridColumn field="number" />
-                        <AgGridColumn field="gender" />
+                        <AgGridColumn field="number" maxWidth={150} />
+                        <AgGridColumn field="gender" maxWidth={120} />
                         <AgGridColumn
                             field="actions"
                             editable="false"
-                            minWidth={200}
+                            maxWidth={180}
                             cellRenderer="editBtn"
                         />
                     </AgGridReact>
@@ -141,22 +130,25 @@ const EmployeeList = (props) => {
         <Container maxWidth="sm">
             <div>
                 <h3>List of Employees</h3>
-                <Grid>
-                    <Grid container justifyContent="flex-end">
+                <Grid container spacing={0}>
+                    <Grid container
+                        direction="column-reverse"
+                        justifyContent="flex-end"
+                        alignItems="flex-end">
                         <Link to={{
                             pathname: `/employee/add`
                         }}>
-                            <Button variant="outlined">Add new employee</Button>
+                            <button className="Add-emp-button">Add new employee</button>
                         </Link>
-                    </Grid>
-
-                    <Grid container justifyContent="center">
-                        <div>{RenderEmployeeListAggrid2()}</div>
-                    </Grid>
                 </Grid>
+                        
+                <Grid container justifyContent="center">
+                    <div>{RenderEmployeeListAggrid()}</div>
+                </Grid>
+            </Grid>
 
-            </div>
-        </Container>
+        </div>
+        </Container >
     );
 };
 
